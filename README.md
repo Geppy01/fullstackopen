@@ -1,2 +1,0 @@
-# fullstackopen
-Full stack MOOC
