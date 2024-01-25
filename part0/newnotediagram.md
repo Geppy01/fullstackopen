@@ -5,7 +5,7 @@
 
     browser->>server: POST https://studies.cs.helsinki.fi/example/app/notes/new_note [{ "content": "test", "date": "2024-1-1" }]
     activate server
-    server->>browser: Redirect HTML document
+    server-->>browser: Redirect HTML document
     deactivate server
 
     Note right of browser: Server saves the new note in the notes list and redirect to notes page
