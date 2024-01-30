@@ -2,7 +2,12 @@ import { useState } from 'react'
 
 //Component that returns current value of each states
 const Statistics = (props) => {
-  console.log(props)
+  //If the total value equals 0 (means that we don't have any feedbacks) then
+  if(props.totalValue===0){
+    return(
+      <p>No feedback given</p>
+    )
+  }
   return(
     <>
       <p>good {props.goodValue}</p>
