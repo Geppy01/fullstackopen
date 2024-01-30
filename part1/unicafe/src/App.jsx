@@ -1,13 +1,19 @@
 import { useState } from 'react'
 
 //Component that returns current value of each states
-const DisplayFeedbacks = (props) => (
-  <>
+const DisplayFeedbacks = (props) => {
+  console.log(props)
+  return(
+    <>
     <p>good {props.goodValue}</p>
     <p>neutral {props.neutralValue}</p>
     <p>bad {props.badValue}</p>
+    <p>all {props.totalValue}</p>
+    <p>average {props.averageValue}</p>
+    <p>positive {props.positiveValue} %</p>
   </>
-)
+  )
+}
 
 const FeedbackButton = (props) => (
   <button onClick={props.onClick}>{props.text}</button>
@@ -18,6 +24,7 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [total, setTotal] = useState(0)
 
   //handler function that changes the right value of states based on rightState value within the conditional statement
   const handleValueClick = (newValue, rightState) =>{
@@ -30,6 +37,8 @@ const App = () => {
     if(rightState == "bad"){
       setBad(newValue)
     }
+
+    setTotal(total+1)
   }
 
   return (
@@ -42,7 +51,8 @@ const App = () => {
       </div>
       <div>
         <h1>statistics</h1>
-        <DisplayFeedbacks goodValue={good} neutralValue={neutral} badValue={bad}/>
+        <DisplayFeedbacks goodValue={good} neutralValue={neutral} badValue={bad} totalValue={total}
+          averageValue={(good-bad)/total} positiveValue={(good/total)*100}/>
       </div>
     </div>
   )
