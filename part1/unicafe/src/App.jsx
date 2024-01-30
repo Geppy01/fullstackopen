@@ -5,22 +5,26 @@ const Statistics = (props) => {
   //If the total value equals 0 (means that we don't have any feedbacks) then
   if(props.totalValue===0){
     return(
-      <p>No feedback given</p>
+      <StatisticLine text="No feedback given"/>
     )
   }
   return(
-    <>
-      <p>good {props.goodValue}</p>
-      <p>neutral {props.neutralValue}</p>
-      <p>bad {props.badValue}</p>
-      <p>all {props.totalValue}</p>
-      <p>average {props.averageValue}</p>
-      <p>positive {props.positiveValue} %</p>
-    </>
+    <div>
+      <StatisticLine text="good" value={props.goodValue} />
+      <StatisticLine text="neutral" value={props.neutralValue} />
+      <StatisticLine text="bad" value={props.badValue} />
+      <StatisticLine text="all" value={props.totalValue} />
+      <StatisticLine text="average" value={props.averageValue} />
+      <StatisticLine text="positive" value={props.positiveValue} additionalArgument='%' />
+    </div>
   )
 }
 
-const FeedbackButton = (props) => (
+const StatisticLine = (props) => (
+  <p>{props.text} {props.value} {props.additionalArgument}</p>
+)
+
+const Button = (props) => (
   <button onClick={props.onClick}>{props.text}</button>
 )
 
@@ -50,9 +54,9 @@ const App = () => {
     <div>
       <div>
         <h1>give feedback</h1>
-        <FeedbackButton onClick={()=>handleValueClick(good+1, "good")} text="good" />
-        <FeedbackButton onClick={()=>handleValueClick(neutral+1, "neutral")}  text="neutral" />
-        <FeedbackButton onClick={()=>handleValueClick(bad+1, "bad")}text="bad" />
+        <Button onClick={()=>handleValueClick(good+1, "good")} text="good" />
+        <Button onClick={()=>handleValueClick(neutral+1, "neutral")}  text="neutral" />
+        <Button onClick={()=>handleValueClick(bad+1, "bad")}text="bad" />
       </div>
       <div>
         <h1>statistics</h1>
