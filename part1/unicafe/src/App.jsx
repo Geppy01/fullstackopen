@@ -5,24 +5,31 @@ const Statistics = (props) => {
   //If the total value equals 0 (means that we don't have any feedbacks) then
   if(props.totalValue===0){
     return(
-      <StatisticLine text="No feedback given"/>
+      <p>No feedback given</p>
     )
   }
   return(
-    <div>
-      <StatisticLine text="good" value={props.goodValue} />
-      <StatisticLine text="neutral" value={props.neutralValue} />
-      <StatisticLine text="bad" value={props.badValue} />
-      <StatisticLine text="all" value={props.totalValue} />
-      <StatisticLine text="average" value={props.averageValue} />
-      <StatisticLine text="positive" value={props.positiveValue} additionalArgument='%' />
-    </div>
+    <table>
+      <tbody>
+        <StatisticLine text="good" value={props.goodValue} />
+        <StatisticLine text="neutral" value={props.neutralValue} />
+        <StatisticLine text="bad" value={props.badValue} />
+        <StatisticLine text="all" value={props.totalValue} />
+        <StatisticLine text="average" value={props.averageValue} />
+        <StatisticLine text="positive" value={props.positiveValue} additionalArgument='%' />
+      </tbody>
+    </table>
   )
 }
 
-const StatisticLine = (props) => (
-  <p>{props.text} {props.value} {props.additionalArgument}</p>
-)
+const StatisticLine = (props) => {
+    return(
+      <tr>
+        <td>{props.text}</td>
+        <td>{props.value} {props.additionalArgument}</td>
+      </tr>
+    )
+}
 
 const Button = (props) => (
   <button onClick={props.onClick}>{props.text}</button>
