@@ -1,17 +1,17 @@
 import { useState } from 'react'
 
 //Component that returns current value of each states
-const DisplayFeedbacks = (props) => {
+const Statistics = (props) => {
   console.log(props)
   return(
     <>
-    <p>good {props.goodValue}</p>
-    <p>neutral {props.neutralValue}</p>
-    <p>bad {props.badValue}</p>
-    <p>all {props.totalValue}</p>
-    <p>average {props.averageValue}</p>
-    <p>positive {props.positiveValue} %</p>
-  </>
+      <p>good {props.goodValue}</p>
+      <p>neutral {props.neutralValue}</p>
+      <p>bad {props.badValue}</p>
+      <p>all {props.totalValue}</p>
+      <p>average {props.averageValue}</p>
+      <p>positive {props.positiveValue} %</p>
+    </>
   )
 }
 
@@ -51,7 +51,7 @@ const App = () => {
       </div>
       <div>
         <h1>statistics</h1>
-        <DisplayFeedbacks goodValue={good} neutralValue={neutral} badValue={bad} totalValue={total}
+        <Statistics goodValue={good} neutralValue={neutral} badValue={bad} totalValue={total}
           averageValue={(good-bad)/total} positiveValue={(good/total)*100}/>
       </div>
     </div>
