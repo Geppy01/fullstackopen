@@ -54,7 +54,21 @@ const App = () => {
     ]
   }
 
-  return <Course course={course} />
+  //Gets each "exercises" value from course.parts and set it in the same index of getExercises
+  const getExercises = course.parts.map(({exercises}) => exercises)
+  let totalExercises = 0;
+  //for every value in getExercises
+  for(let i=0; i<getExercises.length; i++){
+    //sum totalExercises to the current value of getExercises (index i)
+    totalExercises += getExercises[i]
+  }
+
+  return(
+    <div>
+      <Course course={course} />
+      <p><b>total of {totalExercises} exercises</b></p>
+    </div>
+  )
 }
 
 export default App
