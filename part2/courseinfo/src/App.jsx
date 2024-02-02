@@ -56,12 +56,16 @@ const App = () => {
 
   //Gets each "exercises" value from course.parts and set it in the same index of getExercises
   const getExercises = course.parts.map(({exercises}) => exercises)
-  let totalExercises = 0;
-  //for every value in getExercises
-  for(let i=0; i<getExercises.length; i++){
-    //sum totalExercises to the current value of getExercises (index i)
-    totalExercises += getExercises[i]
-  }
+
+  /*Array.reduce() function:
+    On the first call starts from accumulator and currentValue:
+      - IF initialValue is specified (accumulator + currentValue, initialValue):
+        - accumulator = initialValue and currentValue = getExercises[0]
+      - ELSE accumulator = getExercises[0] and currentValue = getExercises[1] */
+  const totalExercises = getExercises.reduce(
+    (accumulator, currentValue) =>
+      accumulator + currentValue
+  )
 
   return(
     <div>
