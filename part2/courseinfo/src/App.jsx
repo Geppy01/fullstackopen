@@ -6,13 +6,12 @@ const Header = ({name}) => {
 
 const Content = ({parts}) => {
   return(
-    <>
-      <ul>
-        {parts.map(part =>
-          <Part key={part.id} part={part} />
-        )}
-      </ul>
-    </>
+    <ul>
+      {parts.map(part =>
+        <Part key={part.id} part={part} />
+      )}
+      <TotalExercises parts={parts} />
+    </ul>
   )
 }
 
@@ -22,55 +21,80 @@ const Part = ({part}) => {
   )
 }
 
+const TotalExercises = ({parts}) => {
+  let exercises = parts.map(part =>
+    part.exercises
+  )
+  let totalExercises = exercises.reduce(
+    (accumulator, currentValue) => accumulator+currentValue
+  )
+
+  return(
+    <li><b>total of {totalExercises} exercises</b></li>
+  )
+}
+
 const Course = ({course}) => {
   return(
-    <div>
-      <Header name={course.name} />
-      <Content parts={course.parts} />
-    </div>
+    <ul>
+      {course.map(course => 
+        <li key={course.id}>
+          <Header name={course.name} />
+          <Content parts={course.parts} />
+        </li>)}
+    </ul>
   )
 }
 
 const App = () => {
-  const course = {
-    id: 1,
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3
-      }
-    ]
-  }
-
-  //Gets each "exercises" value from course.parts and set it in the same index of getExercises
-  const getExercises = course.parts.map(({exercises}) => exercises)
-
-  /*Array.reduce() function:
-    On the first call starts from accumulator and currentValue:
-      - IF initialValue is specified (accumulator + currentValue, initialValue):
-        - accumulator = initialValue and currentValue = getExercises[0]
-      - ELSE accumulator = getExercises[0] and currentValue = getExercises[1] */
-  const totalExercises = getExercises.reduce(
-    (accumulator, currentValue) =>
-      accumulator + currentValue
-  )
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
   return(
     <div>
-      <Course course={course} />
-      <p><b>total of {totalExercises} exercises</b></p>
+      <Course course={courses}/>
     </div>
   )
 }
