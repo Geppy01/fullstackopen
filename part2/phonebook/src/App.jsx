@@ -12,49 +12,65 @@ const DisplayNumbers = ({persons}) => {
 
 const Number = ({person}) => {
   return(
-    <li>{person.name}</li>
+    <li>{person.name} {person.number}</li>
   )
 }
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { 
+      name: 'Arto Hellas',
+      number: '040-1234567',
+    }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
 
-  const addName = (event) => {
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+
+  const addPerson = (event) => {
     event.preventDefault()
-    const nameObject = {
+    const personObject = {
       name: newName,
+      number: newNumber,
     }
 
     const checkIfPersonAlreadyExists = (persons.filter(person => 
-      person.name === nameObject.name
+      person.name === personObject.name
     ).length > 0) ? true : false
 
     if(checkIfPersonAlreadyExists)
     {
       setNewName('')
       return(
-        alert(`${nameObject.name} is already added to phonebook`)
+        alert(`${personObject.name} is already added to phonebook`)
       )
     }
-    setPersons(persons.concat(nameObject))
+    setPersons(persons.concat(personObject))
     setNewName('')
+    setNewNumber('')
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
+      <form onSubmit={addPerson}>
         <div>
           name: <input
             value={newName}
             onChange={handleNameChange} 
+          />
+        </div>
+        <div>
+          number: <input
+            value={newNumber}
+            onChange={handleNumberChange} 
           />
         </div>
         <div>
