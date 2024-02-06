@@ -1,32 +1,7 @@
 import { useState } from 'react'
-
-const DisplayNumbers = ({persons, filter}) => {
-
-  /*if filter has not been indicated then
-      return all the persons
-    else
-      return only persons that start with the indicated filter*/
-  const personsToShow = filter.length === 0
-  ? persons
-  : persons.filter(person => 
-      person.name.toLowerCase().startsWith(
-        filter.toLowerCase()
-  ))
-
-  return(
-    <ul>
-      {personsToShow.map(person =>
-          <Number key={person.name} person={person}/>
-      )}
-    </ul>
-  )
-}
-
-const Number = ({person}) => {
-  return(
-    <li>{person.name} {person.number}</li>
-  )
-}
+import DisplayNumbers from './components/DisplayNumbers'
+import PersonForm from './components/PersonForm'
+import Filter from './components/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -58,7 +33,6 @@ const App = () => {
       number: newNumber,
       id: persons.length + 1,
     }
-    console.log(personObject)
     const checkIfPersonAlreadyExists = (persons.filter(person => 
       person.name === personObject.name
     ).length > 0) ? true : false
@@ -78,30 +52,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with <input
-          value={newFilter}
-          onChange={handleFilterChange}
-        />
-      </div>
+      <Filter valueFilter={newFilter} onChangeFilter={handleFilterChange} />
       <h2>add a new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input
-            value={newName}
-            onChange={handleNameChange} 
-          />
-        </div>
-        <div>
-          number: <input
-            value={newNumber}
-            onChange={handleNumberChange} 
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm
+        onSubmit={addPerson} valueName={newName} onChangeName={handleNameChange}
+        valueNumber={newNumber} onChangeNumber={handleNumberChange}
+      /> 
       <h2>Numbers</h2>
       <DisplayNumbers persons={persons} filter={newFilter}/>
     </div>
