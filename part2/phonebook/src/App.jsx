@@ -16,6 +16,9 @@ const App = () => {
       .then(response => {
         setPersons(response.data)
       })
+      .catch(error => {
+        console.log('fail: ', error)
+      })
   }, [])
 
   const handleNameChange = (event) => {
@@ -35,8 +38,8 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     }
+
     const checkIfPersonAlreadyExists = (persons.filter(person => 
       person.name === personObject.name
     ).length > 0) ? true : false
@@ -48,9 +51,17 @@ const App = () => {
         alert(`${personObject.name} is already added to phonebook`)
       )
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+
+    axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewNumber('')
+      })
+      .catch(error => {
+        console.log('fail: ', error)
+      })
   }
 
   return (
