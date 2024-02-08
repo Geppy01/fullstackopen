@@ -65,6 +65,21 @@ const App = () => {
       })
   }
 
+  const handleRemoveClick = (name, id) => {
+    if(window.confirm(`Delete ${name} ?`)){
+      personService
+      .remove(id)
+      .then(response => {
+        setPersons(persons.filter(person => person.id !== response.data.id))
+      })
+      .catch(error => {
+        console.log(error)
+        alert(`${name} not found`)
+        setPersons(persons.filter(person => person.id !== response.data.id))
+      })
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -75,7 +90,7 @@ const App = () => {
         valueNumber={newNumber} onChangeNumber={handleNumberChange}
       /> 
       <h2>Numbers</h2>
-      <DisplayNumbers persons={persons} filter={newFilter}/>
+      <DisplayNumbers persons={persons} filter={newFilter} onClick={handleRemoveClick}/>
     </div>
   )
 }
