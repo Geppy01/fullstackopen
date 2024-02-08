@@ -47,38 +47,60 @@ const App = () => {
 
     if(checkIfPersonAlreadyExists)
     {
-      setNewName('')
-      return(
-        alert(`${personObject.name} is already added to phonebook`)
-      )
-    }
+      if(personObject.number.length===0){
+        setNewName('')
+        return alert(`${personObject.name} is already added to phonebook`)
+      }
+      else {
+        let findPerson = persons.find(person => 
+          person.name === personObject.name
+        )
+        const newPersonObject = {
+          ...findPerson, 
+          number: personObject.number
+        }
 
-    personService
+        if(window.confirm(`${newPersonObject.name} is already added to phonebook, replace the old number with a new one?`))
+          personService
+            .update(findPerson.id, newPersonObject)
+            .then(returnedPerson => {
+              setPersons(persons.map(person => 
+                person.name !== newPersonObject.name
+                 ? person 
+                 : returnedPerson
+            ))})
+            .catch(error => {
+              console.log('fail: ', error)
+    })}}
+    else {
+      personService
       .create(personObject)
-      .then(returnedPerson=> {
+      .then(returnedPerson => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
       })
       .catch(error => {
         console.log('fail: ', error)
-      })
+    })}
+    setNewName('')
+    setNewNumber('')  
   }
 
   const handleRemoveClick = (name, id) => {
-    if(window.confirm(`Delete ${name} ?`)){
+    if(window.confirm(`Delete ${name} ?`))
       personService
       .remove(id)
-      .then(response => {
-        setPersons(persons.filter(person => person.id !== response.data.id))
-      })
+      .then(removedNote => {
+        setPersons(persons.filter(person => 
+          person.id !== removedNote.id
+      ))})
       .catch(error => {
         console.log(error)
         alert(`${name} not found`)
-        setPersons(persons.filter(person => person.id !== response.data.id))
-      })
-    }
-  }
+        setPersons(persons.filter(person => 
+          person.id !== removedNote.id
+  ))})}
 
   return (
     <div>

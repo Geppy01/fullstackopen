@@ -1,5 +1,4 @@
 const DisplayNumbers = ({persons, filter, onClick}) => {
-  console.log(onClick);
   /*if filter has not been indicated then
       return all the persons
     else
@@ -14,7 +13,7 @@ const DisplayNumbers = ({persons, filter, onClick}) => {
   return(
     <ul>
       {personsToShow.map(person =>
-          <Number key={person.name} person={person} onClick={onClick}/>
+          <Number key={person.id} person={person} onClick={onClick}/>
       )}
     </ul>
   )
